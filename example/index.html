@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+<script>exports = {}</script>
+<script src="../dist/index.js"></script>
+<script>
+(async () => {
+  const sheetId = '1716gXW9rhxUCkcpzt7Wgy7B-Z55AdNELEH_XZ4PNYHs'
+  const sheet = new Sheet(sheetId)
+  const data = await sheet.getData()
+  console.log(data)
+})()
+</script>
+</body>
+</html>

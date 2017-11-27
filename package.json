@@ -2,8 +2,22 @@
   "name": "google-sheets-data",
   "version": "0.1",
   "description": "JavaScript library to read data from a public Google Sheet document",
-  "main": "index.js",
+  "jsnext:main": "./src/Sheet.js",
+  "main": "dist/index.min.js",
+  "module": "src/index.js",
   "repository": "https://github.com/Skwai/google-sheets-data",
   "author": "Cameron Jensen <me@skwai.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src/index.js -o dist/index.js --source-maps"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.12.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
 }
