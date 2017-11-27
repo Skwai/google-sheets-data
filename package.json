@@ -1,0 +1,9 @@
+{
+  "name": "google-sheets-data",
+  "version": "0.1",
+  "description": "JavaScript library to read data from a public Google Sheet document",
+  "main": "index.js",
+  "repository": "https://github.com/Skwai/google-sheets-data",
+  "author": "Cameron Jensen <me@skwai.com>",
+  "license": "MIT"
+}
