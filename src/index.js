@@ -4,12 +4,12 @@ const COL_PREFIX = 'gsx$'
 /**
  * Class representing a Google Sheet
  */
-class GoogleSheetData {
+export default class GoogleSheetsData {
   sheetId = null
 
   /**
    * Create a Google Sheet
-   * @param {String} sheetId 
+   * @param {String} sheetId
    */
   constructor (sheetId) {
     if (!sheetId) throw Error('You must supply a `sheetId` to the constructor')
@@ -20,9 +20,9 @@ class GoogleSheetData {
    * Get the sheet data and return the rows from it
    * @return {Promise.<Array>} The rows in the sheet
    */
-  static async getData () {
-    const data = await Sheet.fetchSheetData(this.sheetId)
-    return Sheet.mapRows(data.feed.entry)
+  async getData () {
+    const data = await GoogleSheetsData.fetchSheetData(this.sheetId)
+    return GoogleSheetsData.mapRows(data.feed.entry)
   }
 
   /**
@@ -31,7 +31,7 @@ class GoogleSheetData {
    * @return {Array} The formatted row data
    */
   static mapRows(rows) {
-    return rows.map(Sheet.mapRow)
+    return rows.map(GoogleSheetsData.mapRow)
   }
 
   /**
@@ -40,16 +40,32 @@ class GoogleSheetData {
    * @return {Object} The formatted array with the sheet column name of each property as the key
    */
   static mapRow(row) {
-    return Object.keys(row)
-      .filter(k => k.includes(COL_PREFIX))
-      .reduce((obj, k) => {
-        // strip prefix from key
-        const key = k.replace(COL_PREFIX, '')
+    const keys = GoogleSheetsData.getRowKeys(row)
+    return keys.reduce((obj, k) => {
+        const key = GoogleSheetsData.stripColumnPrefix(k)
         return Object.assign({
           ...obj,
           [key]: row[k].$t
         })
       }, {})
+  }
+
+  /**
+   * Sanitize a column name by stripping the Google Sheets prefix
+   * @param {String} str
+   * @return {String}
+   */
+  static stripColumnPrefix(str) {
+    return str.replace(COL_PREFIX, '')
+  }
+
+  /**
+   * Get the column keys of a sheet row
+   * @return {Array} Array of column keys
+   */
+  static getRowKeys(row) {
+    return Object.keys(row)
+      .filter(k => k.includes(COL_PREFIX))
   }
 
   /**
@@ -65,7 +81,3 @@ class GoogleSheetData {
     return await response.json()
   }
 }
-
-window.GoogleSheetData = GoogleSheetData
-
-export default GoogleSheetData

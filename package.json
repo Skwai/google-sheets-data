@@ -2,23 +2,30 @@
   "name": "google-sheets-data",
   "version": "0.1",
   "description": "JavaScript library to read data from a public Google Sheet document",
-  "jsnext:main": "./src/Sheet.js",
-  "main": "dist/index.min.js",
-  "module": "src/index.js",
+  "main": "dist/google-sheets`-data.js",
+  "jsnext:main": "src/google-sheets-data.js",
   "repository": "https://github.com/Skwai/google-sheets-data",
   "author": "Cameron Jensen <me@skwai.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src/index.js -o dist/index.js --source-maps"
+    "build": "babel src/index.js -o dist/index.js --source-maps",
+    "lint": "eslint src/ test/",
+    "unit": "mocha ./test/**.js --reporter spec --compilers js:babel-core/register",
+    "test": "npm run lint && npm run unit"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
     "eslint": "^4.12.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "fetch-mock": "^5.13.1",
+    "mocha": "^4.0.1"
   }
 }
