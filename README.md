@@ -21,6 +21,7 @@ const data = await sheet.getData()
 ## How to make a Google Sheet public
 
 ### 1. Publish your Google Sheet: `File -> Publish to the Web`
+
 ### 2. Get the ID from the share URL for your Google Sheet: `Share -> Get shareable link`
 
 For example this shareable link:
