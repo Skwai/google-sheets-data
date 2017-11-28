@@ -1,10 +1,10 @@
 const GOOGLE_SHEETS_URL = 'https://spreadsheets.google.com/feeds/list/%s/od6/public/values?alt=json'
-const PROP_PREFIX = 'gsx$'
+const COL_PREFIX = 'gsx$'
 
 /**
  * Class representing a Google Sheet
  */
-class Sheet {
+class GoogleSheetData {
   sheetId = null
 
   /**
@@ -12,30 +12,48 @@ class Sheet {
    * @param {String} sheetId 
    */
   constructor (sheetId) {
-    if (!sheetId) {
-      throw Error('You must pass a `sheetId` to `Sheet` class constructor')
-    }
+    if (!sheetId) throw Error('You must supply a `sheetId` to the constructor')
     Object.assign(this, { sheetId })
   }
 
   /**
-   * @return {Promise}
+   * Get the sheet data and return the rows from it
+   * @return {Promise.<Array>} The rows in the sheet
    */
-  async getData () {
+  static async getData () {
     const data = await Sheet.fetchSheetData(this.sheetId)
-    console.log(data)
-    // const rows = Sheet.mapRows(data.feed.entry)
+    return Sheet.mapRows(data.feed.entry)
   }
 
+  /**
+   * Format an array of rows
+   * @param {Array} rows The raw rows from the sheet
+   * @return {Array} The formatted row data
+   */
   static mapRows(rows) {
     return rows.map(Sheet.mapRow)
   }
 
+  /**
+   * Format a single sheet row
+   * @param {Object} row A single raw row from the sheet
+   * @return {Object} The formatted array with the sheet column name of each property as the key
+   */
   static mapRow(row) {
-    const keys = Object.keys(row).filter(k => k.includes(PROP_PREFIX))
+    return Object.keys(row)
+      .filter(k => k.includes(COL_PREFIX))
+      .reduce((obj, k) => {
+        // strip prefix from key
+        const key = k.replace(COL_PREFIX, '')
+        return Object.assign({
+          ...obj,
+          [key]: row[k].$t
+        })
+      }, {})
   }
 
   /**
+   * Fetch the JSON data from the sheet
    * @param {String} sheetId The ID of the Google Sheet
    * @return {Promise.<Object>} The Google Sheet data
    */
@@ -48,6 +66,6 @@ class Sheet {
   }
 }
 
-window.Sheet = Sheet
+window.GoogleSheetData = GoogleSheetData
 
-export default Sheet
+export default GoogleSheetData
