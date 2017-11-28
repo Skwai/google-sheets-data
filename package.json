@@ -11,7 +11,7 @@
     "build": "babel src/index.js -o dist/index.js --source-maps",
     "lint": "eslint src/ test/",
     "unit": "mocha ./test/**.js --reporter spec --compilers js:babel-core/register",
-    "test": "npm run lint && npm run unit"
+    "test": "yarn run lint && yarn run unit"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -21,6 +21,7 @@
     "chai": "^4.1.2",
     "eslint": "^4.12.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-class-property": "^1.0.6",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",

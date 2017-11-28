@@ -5,8 +5,6 @@ const COL_PREFIX = 'gsx$'
  * Class representing a Google Sheet
  */
 export default class GoogleSheetsData {
-  sheetId = null
-
   /**
    * Create a Google Sheet
    * @param {String} sheetId
@@ -30,7 +28,7 @@ export default class GoogleSheetsData {
    * @param {Array} rows The raw rows from the sheet
    * @return {Array} The formatted row data
    */
-  static mapRows(rows) {
+  static mapRows (rows) {
     return rows.map(GoogleSheetsData.mapRow)
   }
 
@@ -39,15 +37,15 @@ export default class GoogleSheetsData {
    * @param {Object} row A single raw row from the sheet
    * @return {Object} The formatted array with the sheet column name of each property as the key
    */
-  static mapRow(row) {
+  static mapRow (row) {
     const keys = GoogleSheetsData.getRowKeys(row)
     return keys.reduce((obj, k) => {
-        const key = GoogleSheetsData.stripColumnPrefix(k)
-        return Object.assign({
-          ...obj,
-          [key]: row[k].$t
-        })
-      }, {})
+      const key = GoogleSheetsData.stripColumnPrefix(k)
+      return Object.assign({
+        ...obj,
+        [key]: row[k].$t
+      })
+    }, {})
   }
 
   /**
@@ -55,7 +53,7 @@ export default class GoogleSheetsData {
    * @param {String} str
    * @return {String}
    */
-  static stripColumnPrefix(str) {
+  static stripColumnPrefix (str) {
     return str.replace(COL_PREFIX, '')
   }
 
@@ -63,7 +61,7 @@ export default class GoogleSheetsData {
    * Get the column keys of a sheet row
    * @return {Array} Array of column keys
    */
-  static getRowKeys(row) {
+  static getRowKeys (row) {
     return Object.keys(row)
       .filter(k => k.includes(COL_PREFIX))
   }
@@ -74,10 +72,10 @@ export default class GoogleSheetsData {
    * @return {Promise.<Object>} The Google Sheet data
    */
   static async fetchSheetData (sheetId) {
-    const url = GOOGLE_SHEETS_URL.replace('%s', sheetId);
+    const url = GOOGLE_SHEETS_URL.replace('%s', sheetId)
     const response = await fetch(url, {
       mode: 'cors'
     })
-    return await response.json()
+    return response.json()
   }
 }
