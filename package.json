@@ -1,6 +1,6 @@
 {
   "name": "google-sheets-data",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JavaScript library to read data from a public Google Sheet document",
   "main": "dist/index.min.js",
   "jsnext:main": "src/index.js",

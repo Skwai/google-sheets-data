@@ -6,7 +6,7 @@ const COL_PREFIX = 'gsx$'
  */
 export default class GoogleSheetsData {
   /**
-   * Create a Google Sheet
+   * Create a Google Sheet instance
    * @param {String} sheetId
    */
   constructor (sheetId) {
@@ -16,7 +16,7 @@ export default class GoogleSheetsData {
 
   /**
    * Get the sheet data and return the rows from it
-   * @return {Promise.<Array>} The rows in the sheet
+   * @returns {Promise.<Array.<Object>>} The rows in the sheet
    */
   async getData () {
     const data = await GoogleSheetsData.fetchSheetData(this.sheetId)
@@ -25,8 +25,8 @@ export default class GoogleSheetsData {
 
   /**
    * Format an array of rows
-   * @param {Array} rows The raw rows from the sheet
-   * @return {Array} The formatted row data
+   * @param {Array.<String>} rows The raw rows from the sheet
+   * @returns {Array.<Object>} The formatted row data
    */
   static mapRows (rows) {
     return rows.map(GoogleSheetsData.mapRow)
@@ -35,7 +35,7 @@ export default class GoogleSheetsData {
   /**
    * Format a single sheet row
    * @param {Object} row A single raw row from the sheet
-   * @return {Object} The formatted array with the sheet column name of each property as the key
+   * @returns {Object} The formatted array with the sheet column name of each property as the key
    */
   static mapRow (row) {
     const keys = GoogleSheetsData.getRowKeys(row)
@@ -50,8 +50,8 @@ export default class GoogleSheetsData {
 
   /**
    * Sanitize a column name by stripping the Google Sheets prefix
-   * @param {String} str
-   * @return {String}
+   * @param {String} str A column name to sanitize
+   * @returns {String} The sanitized column name
    */
   static stripColumnPrefix (str) {
     return str.replace(COL_PREFIX, '')
@@ -59,7 +59,8 @@ export default class GoogleSheetsData {
 
   /**
    * Get the column keys of a sheet row
-   * @return {Array} Array of column keys
+   * @param {Object} row A single sheet row
+   * @returns {Array.<String>} Array of column keys
    */
   static getRowKeys (row) {
     return Object.keys(row)
@@ -69,7 +70,7 @@ export default class GoogleSheetsData {
   /**
    * Fetch the JSON data from the sheet
    * @param {String} sheetId The ID of the Google Sheet
-   * @return {Promise.<Object>} The Google Sheet data
+   * @returns {Promise.<Object>} The Google Sheet data
    */
   static async fetchSheetData (sheetId) {
     const url = GOOGLE_SHEETS_URL.replace('%s', sheetId)
