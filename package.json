@@ -15,8 +15,7 @@
     "build": "babel src/index.js -o dist/index.min.js --source-maps",
     "lint": "eslint src/ test/",
     "unit": "mocha ./test/**.js --reporter spec --compilers js:babel-core/register",
-    "test": "yarn run lint && yarn run unit",
-    "example": "http-server ./src --cors"
+    "test": "yarn run lint && yarn run unit"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,7 +32,6 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "fetch-mock": "^5.13.1",
-    "http-server": "^0.10.0",
     "mocha": "^4.0.1"
   }
 }
